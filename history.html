@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YOGA Kitchen - Order History</title>
+    <!-- Link to the CSS files -->
+    <link rel="stylesheet" href="resources/css/style.css" />
+    <link rel="stylesheet" href="resources/css/history.css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" id="logo">
+                <h2><span class="wow w900">YOGA</span> Kitchen</h2>
+            </a>
+            <ul id="nav-bar" class="mt-3">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="neworders.html">New Orders</a></li>
+                <li><a href="history.html">Order History</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="history-container">
+            <h1>Order History</h1>
+            <table id="history-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Food Item</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="history-list">
+                    <!-- Dynamic order history list will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <!-- Link to the JS file -->
+    <script src="resources/js/history.js"></script>
+</body>
+</html>

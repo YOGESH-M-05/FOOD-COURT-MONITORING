@@ -1,0 +1,154 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+header {
+    background-color: #333;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+#logo h2 {
+    font-size: 2rem;
+}
+
+#logo span {
+    font-weight: 900;
+}
+
+main {
+    margin-top: 30px;
+}
+
+/* Order Form Styles */
+.orders-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.orders-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="number"] {
+    width: 50%;
+}
+
+button.submit-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 150px;
+    align-self: center;
+}
+
+button.submit-btn:hover {
+    background-color: #218838;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Orders Table Styles */
+h2 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f8f8f8;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td {
+    font-size: 1rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    input[type="number"] {
+        width: 100%;
+    }
+
+    button.submit-btn {
+        width: 100%;
+    }
+}
