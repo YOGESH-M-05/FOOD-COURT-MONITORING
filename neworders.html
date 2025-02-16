@@ -1,71 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YOGA Kitchen - New Orders</title>
-    <!-- Correct CSS file paths -->
-    <link rel="stylesheet" href="resources/css/style.css" />
-    <link rel="stylesheet" href="resources/css/neworders.css" />
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <nav>
-            <a href="index.html" id="logo">
-                <h2><span class="wow w900">YOGA</span> Kitchen</h2>
-            </a>
-            <ul id="nav-bar" class="mt-3">
-                <li><a href="index.html">Home</a></li>
+            <a href="index.html" id="logo"><h2><span class="yoga">Yoga</span>Kitchen</h2></a>
+            <i class="fas fa-bars" id="ham-menu"></i>
+            <ul id="nav-bar" class="nav-bar">
                 <li><a href="neworders.html">New Orders</a></li>
-                <li><a href="history.html">Order History</a></li>
-                <li><a href="analytics.html">Analytics</a></li>
-                <li><a href="settings.html">Settings</a></li>
+                <li><a href="signup.html">Signup</a></li>
             </ul>
         </nav>
     </header>
+    
     <main>
-        <div class="orders-container">
-            <h1>New Order</h1>
-
-            <!-- Form to submit a new order -->
-            <form id="order-form" action="/order" method="POST">
-                <div class="form-group">
-                    <label for="customer-name">Customer Name:</label>
-                    <input type="text" id="customer-name" placeholder="Enter your name" required />
-                </div>
-                <div class="form-group">
-                    <label for="food-item">Food Item:</label>
-                    <input type="text" id="food-item" placeholder="Enter food item" required />
-                </div>
-                <div class="form-group">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" placeholder="Enter quantity" required />
-                </div>
-                <div class="form-group">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" placeholder="Enter address" required />
-                </div>
-                <button type="submit" id="submit-order" class="submit-btn">Submit Order</button>
-            </form>
-
-            <h2>Orders List</h2>
-            <table id="orders-table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer Name</th>
-                        <th>Food Item</th>
-                        <th>Quantity</th>
-                        <th>Address</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="order-list">
-                    <!-- Dynamic order list will be added here -->
-                </tbody>
-            </table>
+        <h2>Orders List</h2>
+        <div id="order-list" class="order-list-container">
+            <!-- Orders will be dynamically added here -->
         </div>
     </main>
-    <!-- Correct JavaScript file path -->
-    <script src="resources/js/neworders.js"></script>
+
+    <script>
+        async function fetchOrders() {
+            try {
+                const response = await fetch('http://localhost:4002/orders');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const orders = await response.json();
+                console.log("Fetched Orders:", orders);
+
+                let ordersContainer = document.getElementById('order-list');
+                ordersContainer.innerHTML = '';
+
+                if (orders.length === 0) {
+                    ordersContainer.innerHTML = '<p>No orders found.</p>';
+                    return;
+                }
+
+                orders.forEach(order => {
+                    let orderBox = document.createElement('div');
+                    orderBox.classList.add('order-box');
+                    orderBox.setAttribute('data-id', order.id || order._id);
+                    orderBox.innerHTML = `
+                        <h3>${order.item_name || "Unknown Item"}</h3>
+                        <p><strong>Customer:</strong> ${order.customer_name || "N/A"}</p>
+                        <p><strong>Quantity:</strong> ${order.quantity || "N/A"}</p>
+                        <p><strong>Price:</strong> ${order.price ? `$${order.price}` : "N/A"}</p>
+                        <p><strong>Total Price:</strong> ${order.total_price ? `$${order.total_price}` : "N/A"}</p>
+                        <p><strong>Address:</strong> ${order.address || "N/A"}</p>
+                        <p><strong>Timestamp:</strong> ${order.timestamp ? new Date(order.timestamp).toLocaleString() : "N/A"}</p>
+                        <button class="delete-btn" onclick="deleteOrder('${order.id || order._id}', this)">Delete</button>
+                    `;
+                    ordersContainer.appendChild(orderBox);
+                });
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                document.getElementById('order-list').innerHTML = `<p style="color: red;">Failed to load orders.</p>`;
+            }
+        }
+
+        async function deleteOrder(orderId, button) {
+            if (!confirm("Are you sure you want to delete this order?")) return;
+
+            try {
+                const response = await fetch(`http://localhost:4002/orders/${orderId}`, { method: 'DELETE' });
+
+                if (response.ok) {
+                    button.parentElement.remove();
+                } else {
+                    throw new Error("Failed to delete order.");
+                }
+            } catch (error) {
+                console.error('Error deleting order:', error);
+            }
+        }
+
+        window.onload = fetchOrders;
+    </script>
 </body>
 </html>
